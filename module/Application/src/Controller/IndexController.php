@@ -41,16 +41,15 @@ class IndexController extends AbstractActionController
             $lopList = $this->lopTable->danhSachLop();
         }
 
-        return new ViewModel([
+        return [
             // 'form' => $form,
             'lopList' => $lopList,
-            'keyword' => $keyword
-        ]);
+            'keyword' => $keyword,
+        ];
     }
 
     public function addAction()
     {
-        $messages = "";
         foreach ($this->monHocRows as $monhoc) {
             $mon = $monhoc->MaMonHoc . " (" . $monhoc->TenMon . ")";
             $this->x['monHocRows'][$monhoc->MaMonHoc] = $mon;
@@ -58,10 +57,15 @@ class IndexController extends AbstractActionController
 
         $form = new Form\LopHocForm('LopHoc_form', $this->x);
 
+        $view = [
+            'lopHocForm' => $form,
+            'messages' => '',
+        ];
+
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
-            return ['lopHocForm' => $form, 'messages' => $messages];
+            return $view;
         }
 
         $lophoc = new Model\LopEntity();
@@ -69,8 +73,8 @@ class IndexController extends AbstractActionController
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
-            $messages = $form->getMessages();
-            return ['lopHocForm' => $form, 'messages' => $messages];
+            $view['messages'] = $form->getMessages();
+            return $view;
         }
 
         $lophoc->exchangeArray($form->getData());
@@ -80,7 +84,6 @@ class IndexController extends AbstractActionController
 
     public function editAction()
     {
-        $viewData['messages'] = "";
         $id = $this->params()->fromRoute('id', '');
 
         if (preg_replace('/\s+/', '', $id) == '') {
@@ -102,7 +105,12 @@ class IndexController extends AbstractActionController
         $form->get('submit')->setAttribute('value', 'Sửa');
 
         $request = $this->getRequest();
-        $viewData = ['id' => $id, 'lopHocForm' => $form];
+
+        $viewData = [
+            'messages' => '',
+            'id' => $id,
+            'lopHocForm' => $form,
+        ];
 
         if (!$request->isPost()) {
             return $viewData;

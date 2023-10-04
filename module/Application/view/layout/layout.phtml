@@ -51,7 +51,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a
-                                class="nav-link <?= (str_contains($this->url('lopHoc'), 'lophoc')) ? 'active' : ''; ?>"
+                                class="nav-link <?= (str_contains($this->url(), 'lophoc')) ? 'active' : '' ?>"
                                 aria-current="page"
                                 href="<?= $this->url('lopHoc') ?>"
                             >Lớp học
@@ -59,7 +59,7 @@
                         </li>
                         <li class="nav-item">
                             <a
-                                class="nav-link <?= (str_contains($this->url('monHoc'), 'monhoc')) ? 'active' : '' ?>"
+                                class="nav-link <?= (str_contains($this->url(), 'monhoc')) ? 'active' : '' ?>"
                                 aria-current="page"
                                 href="<?= $this->url('monHoc') ?>"
                             >Môn học
@@ -67,7 +67,7 @@
                         </li>
                         <li class="nav-item">
                             <a
-                                class="nav-link"
+                                class="nav-link <?= (str_contains($this->url(), 'hocvien')) ? 'active' : '' ?>"
                                 aria-current="page"
                                 href="<?= $this->url('hocVien') ?>"
                             >Học viên
@@ -75,7 +75,7 @@
                         </li>
                         <li class="nav-item">
                             <a
-                                class="nav-link"
+                                class="nav-link <?= (str_contains($this->url(), 'dangky')) ? 'active' : '' ?>"
                                 aria-current="page"
                                 href="<?= $this->url('dangKy') ?>"
                             >Đăng ký

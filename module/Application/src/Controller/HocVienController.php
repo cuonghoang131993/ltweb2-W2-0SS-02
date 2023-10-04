@@ -3,13 +3,13 @@
 namespace Application\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Application\Model;
 use Application\Form;
 
 class HocVienController extends AbstractActionController
 {
     protected $hocVienTable;
+    private $currentRoute;
 
     public function __construct(Model\HocVienTable $_hocVienTable)
     {
@@ -32,30 +32,31 @@ class HocVienController extends AbstractActionController
             $rows = $this->hocVienTable->getBy([]);
         }
 
-        $view = new ViewModel();
-
-        $view->setVariable('hocVienRows', $rows);
-        $view->setVariable('keyword', $keyword);
-
-        return $view;
+        return [
+            'hocVienRows' => $rows,
+            'keyword' => $keyword
+        ];
     }
 
     public function addAction()
     {
-        $messages = "";
         $request = $this->getRequest();
         $hocVienForm = new Form\HocVienForm();
+        $view = [
+            'hocVienForm' => $hocVienForm,
+            'messages' => '',
+        ];
 
         if (!$request->isPost()) {
-            return ['hocVienForm' => $hocVienForm, 'messages' => $messages];
+            return $view;
         }
         $hocVien = new Model\HocVienEntity();
         $hocVienForm->setInputFilter($hocVien->getInputFilter());
         $hocVienForm->setData($request->getPost());
 
         if (!$hocVienForm->isValid()) {
-            $messages = $hocVienForm->getMessages();
-            return ['hocVienForm' => $hocVienForm, 'messages' => $messages];
+            $view['messages'] = $hocVienForm->getMessages();
+            return $view;
         }
         $hocVien->exchangeArray($hocVienForm->getData());
         $this->hocVienTable->save($hocVien);
@@ -65,10 +66,12 @@ class HocVienController extends AbstractActionController
 
     public function editAction()
     {
-        $view = new ViewModel();
         $hocVienId = $this->params()->fromRoute('id', '');
-        $view->setVariable('hocVienId', $hocVienId);
-        $view->setVariable('messages', '');
+
+        $view = [
+            'hocVienId' => $hocVienId,
+            'messages' => '',
+        ];
 
         if (preg_replace('/\s+/', '', $hocVienId) == '') {
             return $this->redirect()->toRoute('hocVien', ['action' => 'add']);
@@ -85,7 +88,7 @@ class HocVienController extends AbstractActionController
         $hocVienForm->get('submit')->setAttribute('value', 'Sửa');
         
         $request = $this->getRequest();
-        $view->setVariable('hocVienForm', $hocVienForm);
+        $view['hocVienForm'] = $hocVienForm;
 
         if (!$request->isPost()) {
             return $view;
@@ -94,7 +97,7 @@ class HocVienController extends AbstractActionController
         $hocVienForm->setData($request->getPost());
 
         if (!$hocVienForm->isValid()) {
-            $view->setVariable('messages', $hocVienForm->getMessages());
+            $view['messages'] = $hocVienForm->getMessages();
             return $view;
         }
         

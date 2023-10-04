@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Application\Model;
 use Application\Form;
 
@@ -22,9 +21,9 @@ class MonHocController extends AbstractActionController
     {
         $res = $this->monHocTable->getBy();
 
-        return new ViewModel([
-            'monHocRows' => $res
-        ]);
+        return [
+            'monHocRows' => $res,
+        ];
     }
 
     public function addAction()
@@ -33,8 +32,12 @@ class MonHocController extends AbstractActionController
 
         $request = $this->getRequest();
 
+        $view = [
+            'monHocForm' => $form,
+        ];
+
         if (!$request->isPost()) {
-            return ['monHocForm' => $form];
+            return $view;
         }
 
         $monhoc = new Model\MonHocEntity();
@@ -42,7 +45,8 @@ class MonHocController extends AbstractActionController
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
-            return ['monHocForm' => $form];
+            $view['messages'] = $form->getMessages();
+            return $view;
         }
 
         $monhoc->exchangeArray($form->getData());
@@ -69,7 +73,7 @@ class MonHocController extends AbstractActionController
         $form->get('submit')->setAttribute('value', 'Sửa');
 
         $request = $this->getRequest();
-        $viewData = ['id' => $id, 'monHocForm' => $form];
+        $viewData = ['id' => $id, 'monHocForm' => $form, 'current_route' => $this->currentRoute ];
 
         if (!$request->isPost()) {
             return $viewData;
@@ -79,6 +83,7 @@ class MonHocController extends AbstractActionController
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
+            $viewData['messages'] = $form->getMessages();
             return $viewData;
         }
 

@@ -23,7 +23,7 @@ class DangKyController extends AbstractActionController
         $res = $this->dangKyTable->getBy();
 
         return new ViewModel([
-            'dangKyRows' => $res
+            'dangKyRows' => $res,
         ]);
     }
 
@@ -33,9 +33,10 @@ class DangKyController extends AbstractActionController
         $form = new Form\DangKyForm();
 
         $request = $this->getRequest();
+        $view = ['dangKyForm' => $form, 'messages' => $messages];
 
         if (!$request->isPost()) {
-            return ['dangKyForm' => $form, 'messages' => $messages];
+            return $view;
         }
 
         $dangky = new Model\DangKyEntity();
@@ -43,8 +44,8 @@ class DangKyController extends AbstractActionController
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
-            $messages = $form->getMessages();
-            return ['dangKyForm' => $form, 'messages' => $messages];
+            $view['messages'] = $form->getMessages();
+            return $view;
         }
 
         $dangky->exchangeArray($form->getData());
@@ -55,7 +56,6 @@ class DangKyController extends AbstractActionController
     public function editAction()
     {
         $id = $this->params()->fromRoute('id', '');
-        $viewData['messages'] = '';
 
         if (preg_replace('/\s+/', '', $id) == '') {
             return $this->redirect()->toRoute('dangKy', ['action' => 'add']);
@@ -72,7 +72,12 @@ class DangKyController extends AbstractActionController
         $form->get('submit')->setAttribute('value', 'Sửa');
 
         $request = $this->getRequest();
-        $viewData = ['id' => $id, 'dangKyForm' => $form, 'dangky' => $dangky];
+        $viewData = [
+            'id' => $id,
+            'dangKyForm' => $form,
+            'dangky' => $dangky,
+            'messages' => ''
+        ];
 
         if (!$request->isPost()) {
             return $viewData;
@@ -127,7 +132,7 @@ class DangKyController extends AbstractActionController
 
         return [
             'id' => $id,
-            'dangky' => $dangky
+            'dangky' => $dangky,
         ];
     }
 }
