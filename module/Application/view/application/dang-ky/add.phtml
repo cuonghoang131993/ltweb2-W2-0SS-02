@@ -1,0 +1,62 @@
+<div class="jumbotron">
+    <h1><span class="zf-green">Thêm đăng ký môn</span></h1>
+    <?php
+    $maSV = $dangKyForm->get('MaSV');
+    $maSV->setAttribute('class', 'form-control');
+    $maSV->setAttribute('placeholder', 'Mã sinh viên');
+
+    $lop = $dangKyForm->get('Lop');
+    $lop->setAttribute('class', 'form-control');
+    $lop->setAttribute('placeholder', 'Mã Lớp');
+
+    $lanhocthu = $dangKyForm->get('LanHocThu');
+    $lanhocthu->setAttribute('class', 'form-control');
+    $lanhocthu->setAttribute('placeholder', 'Lần học');
+
+    $diem = $dangKyForm->get('Diem');
+    $diem->setAttribute('class', 'form-control');
+    $diem->setAttribute('placeholder', 'Điểm');
+
+    $dangKyForm->setAttribute('action', $this->url('dangKy', ['action' => 'add']));
+    $dangKyForm->prepare();
+    echo $this->form()->openTag($dangKyForm);
+    ?>
+    <?php
+    if (isset($messages) && $messages != '') {
+        foreach ($messages as $key => $mess_array) {
+            $mess_concat = implode(',', $mess_array);
+            echo "<p class='alert alert-warning'>$key - $mess_concat</p>";
+        }
+    }
+    ?>
+    <div class="form-group">
+        <?= $this->formLabel($maSV); ?>
+        <?= $this->formElement($maSV); ?>
+        <?= $this->formElementErrors()->render($maSV, ['class' => 'help-block']) ?>
+    </div>
+    <br/>
+    <div class="form-group">
+        <?= $this->formLabel($lop); ?>
+        <?= $this->formElement($lop); ?>
+        <?= $this->formElementErrors()->render($lop, ['class' => 'help-block']) ?>
+    </div>
+    <br/>
+    <div class="form-group">
+        <?= $this->formLabel($lanhocthu); ?>
+        <?= $this->formElement($lanhocthu); ?>
+        <?= $this->formElementErrors()->render($lanhocthu, ['class' => 'help-block']) ?>
+    </div>
+    <br/>
+    <div class="form-group">
+        <?= $this->formLabel($diem); ?>
+        <?= $this->formElement($diem); ?>
+        <?= $this->formElementErrors()->render($diem, ['class' => 'help-block']) ?>
+    </div>
+    <br/>
+    <?php
+    echo $this->formSubmit($dangKyForm->get('submit'));
+    echo "<a href='javascript:history.go(-1)' class='ms-4 btn btn-outline-secondary'>Quay lại</a>";
+
+    echo $this->form()->closeTag();
+    ?>
+</div>

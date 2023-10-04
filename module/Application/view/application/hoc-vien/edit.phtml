@@ -1,0 +1,64 @@
+<div class="jumbotron">
+    <h1><span class="zf-green">Sửa thông tin học viên:
+            <?= $hocVienId ?>
+        </span></h1>
+    <?php
+    $tensv = $hocVienForm->get('TenSV');
+    $tensv->setAttribute('class', 'form-control');
+    $tensv->setAttribute('placeholder', 'Tên sinh viên');
+
+    $gioitinh = $hocVienForm->get('GioiTinh');
+    $gioitinh->setAttribute('class', 'form-control');
+    $gioitinh->setAttribute('placeholder', 'Giới tính');
+
+    $nsinh = $hocVienForm->get('Nsinh');
+    $nsinh->setAttribute('class', 'form-control');
+    $nsinh->setAttribute('placeholder', 'Ngày sinh');
+
+    $hocVienForm->setAttribute(
+        'action',
+        $this->url(
+            'hocVien',
+            [
+                'action' => 'edit',
+                'id' => $hocVienId
+            ]
+        )
+    );
+    $hocVienForm->prepare();
+    echo $this->form()->openTag($hocVienForm);
+    ?>
+    <?php
+    if (isset($messages) && $messages != '') {
+        foreach ($messages as $key => $mess_array) {
+            $mess_concat = implode(',', $mess_array);
+            echo "<p class='alert alert-warning'>$key - $mess_concat</p>";
+        }
+    }
+    ?>
+    <?= $this->formHidden($hocVienForm->get('MSSV')); ?>
+    <div class="form-group">
+        <?= $this->formLabel($tensv); ?>
+        <?= $this->formElement($tensv); ?>
+        <?= $this->formElementErrors()->render($tensv, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($gioitinh); ?>
+        <?= $this->formElement($gioitinh); ?>
+        <?= $this->formElementErrors()->render($gioitinh, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($nsinh); ?>
+        <?= $this->formElement($nsinh); ?>
+        <?= $this->formElementErrors()->render($nsinh, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <?php
+    echo $this->formSubmit($hocVienForm->get('submit'));
+    echo "<a href='javascript:history.go(-1)' class='ms-4 btn btn-outline-secondary'>Quay lại</a>";
+
+    echo $this->form()->closeTag();
+    ?>
+</div>

@@ -1,0 +1,35 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+
+use Laminas\View\Helper\EscapeHtml;
+
+?>
+<div class="jumbotron">
+    <h1><span class="zf-green">Đăng ký môn học</span></h1>
+    <a href="<?= $this->url('dangKy', ['action' => 'add']) ?>">Thêm</a>
+    <table class="table">
+        <tr></tr>
+        <th>Mã sinh viên</th>
+        <th>Lớp</th>
+        <th>Lần học</th>
+        <th>Điểm</th>
+        <th></th>
+        
+        </tr>
+        <?php foreach ($dangKyRows as $dangKy): ?>
+        <tr>
+            <td><?= $this->escapeHtml($dangKy->getMaSV()) ?></td>
+            <td><?= $this->escapeHtml($dangKy->getLop()) ?></td>
+            <td><?= $this->escapeHtml($dangKy->getLanHocThu()) ?></td>
+            <td><?= $this->escapeHtml($dangKy->getDiem()) ?></td>
+
+            <td>
+                <a href="<?= $this->url('dangKy', ['action' => 'edit', 'id' => $dangKy->getId()]) ?>">Edit</a> |
+                <a href="<?= $this->url('dangKy', ['action' => 'delete', 'id' => $dangKy->getId()]) ?>">Delete</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

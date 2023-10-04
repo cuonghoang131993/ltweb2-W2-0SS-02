@@ -1,0 +1,13 @@
+<div class="jumbotron">
+    <h1><span class="zf-green">Xóa học viên</span></h1>
+    <p>
+        Bạn có chắc muốn xóa học viên: "<?= $id ?>"
+    </p>
+    <form action="<?= $this->url('hocVien', ['action' => 'delete', 'id' => $id]) ?>" method="post">
+    <div class="form-group">
+        <input type="hidden" name="id" value="<?= $id ?>" />
+            <input type="submit" class="btn btn-danger" name="del" value="Yes" />
+            <input type="submit" class="btn btn-success" name="del" value="No" />
+        </div>
+    </form>
+</div>

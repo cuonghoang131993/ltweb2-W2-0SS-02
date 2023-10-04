@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<div class="jumbotron">
+    <h1><span class="zf-green">Môn học</span></h1>
+    <a href="<?= $this->url('monHoc', ['action' => 'add']) ?>">Thêm</a>
+    <table class="table">
+        <tr>
+        <th>Mã Môn</th>
+        <th>Tên Môn</th>
+
+        <th></th>
+        
+        </tr>
+        <?php foreach ($monHocRows as $monHoc): ?>
+        <tr>
+            <td><?= $monHoc->getMaMonHoc() ?></td>
+            <td><?= $monHoc->getTenMon() ?></td>
+
+            <td>
+                <a href="<?= $this->url('monHoc', ['action' => 'edit', 'id' => $monHoc->getMaMonHoc()]) ?>">Edit</a> |
+                <a href="<?= $this->url('monHoc', ['action' => 'delete', 'id' => $monHoc->getMaMonHoc()]) ?>">Delete</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

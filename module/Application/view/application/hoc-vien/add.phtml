@@ -1,0 +1,62 @@
+<div class="jumbotron">
+    <h1><span class="zf-green">Thêm học viên</span></h1>
+    <?php
+    $mssv = $hocVienForm->get('MSSV');
+    $mssv->setAttribute('class', 'form-control');
+    $mssv->setAttribute('placeholder', 'MSSV');
+
+    $ten = $hocVienForm->get('TenSV');
+    $ten->setAttribute('class', 'form-control');
+    $ten->setAttribute('placeholder', 'Tên sinh viên');
+
+    $gioitinh = $hocVienForm->get('GioiTinh');
+    $gioitinh->setAttribute('class', 'form-control');
+    $gioitinh->setAttribute('placeholder', 'Giới tính');
+
+    $nsinh = $hocVienForm->get('Nsinh');
+    $nsinh->setAttribute('class', 'form-control');
+    $nsinh->setAttribute('placeholder', 'Ngày sinh');
+
+    $hocVienForm->setAttribute('action', $this->url('hocVien', ['action' => 'add']));
+    $hocVienForm->prepare();
+    echo $this->form()->openTag($hocVienForm);
+    ?>
+    <?php
+    if (isset($messages) && $messages != '') {
+        foreach ($messages as $key => $mess_array) {
+            $mess_concat = implode(',', $mess_array);
+            echo "<p class='alert alert-warning'>$key - $mess_concat</p>";
+        }
+    }
+    ?>
+    <div class="form-group">
+        <?= $this->formLabel($mssv); ?>
+        <?= $this->formElement($mssv); ?>
+        <?= $this->formElementErrors()->render($mssv, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($ten); ?>
+        <?= $this->formElement($ten); ?>
+        <?= $this->formElementErrors()->render($ten, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($gioitinh); ?>
+        <?= $this->formElement($gioitinh); ?>
+        <?= $this->formElementErrors()->render($gioitinh, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($nsinh); ?>
+        <?= $this->formElement($nsinh); ?>
+        <?= $this->formElementErrors()->render($nsinh, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <?php
+    echo $this->formSubmit($hocVienForm->get('submit'));
+    echo "<a href='javascript:history.go(-1)' class='ms-4 btn btn-outline-secondary'>Quay lại</a>";
+
+    echo $this->form()->closeTag();
+    ?>
+</div>

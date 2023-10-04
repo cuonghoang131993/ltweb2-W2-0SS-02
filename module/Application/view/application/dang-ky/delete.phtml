@@ -1,0 +1,15 @@
+<div class="jumbotron">
+    <h1><span class="zf-green">Xóa đăng ký môn học</span></h1>
+    <p>
+        Bạn có chắc muốn xóa đăng ký môn học: "Mã SV: <?= $dangky->MaSV ?> - Lớp: <?= $dangky->Lop ?> (lần học: <?= $dangky->LanHocThu ?>)"
+    </p>
+    <form action="<?= $this->url('dangKy', ['action' => 'delete', 'id' => $id]) ?>" method="post">
+        <div class="form-group">
+            <input type="hidden" name="MaSV" value="<?= $dangky->getMaSV() ?>" />
+            <input type="hidden" name="Lop" value="<?= $dangky->getLop() ?>" />
+            <input type="hidden" name="LanHocThu" value="<?= $dangky->getLanHocThu() ?>" />
+            <input type="submit" class="btn btn-danger" name="del" value="Yes" />
+            <input type="submit" class="btn btn-success" name="del" value="No" />
+        </div>
+    </form>
+</div>

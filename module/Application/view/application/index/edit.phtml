@@ -1,0 +1,57 @@
+<div class="jumbotron">
+    <h1><span class="zf-green">Sửa lớp học:
+            <?= $id ?>
+        </span></h1>
+    <?php
+    $maMon = $lopHocForm->get('MaMH');
+    $maMon->setAttribute('class', 'form-control');
+    $maMon->setAttribute('placeholder', 'Môn');
+
+    $hocky = $lopHocForm->get('HocKy');
+    $hocky->setAttribute('class', 'form-control');
+    $hocky->setAttribute('placeholder', 'Học Kỳ');
+
+    $nam = $lopHocForm->get('Nam');
+    $nam->setAttribute('class', 'form-control');
+    $nam->setAttribute('placeholder', 'Năm');
+
+    $lopHocForm->setAttribute(
+        'action',
+        $this->url(
+            'lopHoc',
+            [
+                'action' => 'edit',
+                'id' => $id
+            ]
+        )
+    );
+    $lopHocForm->prepare();
+    echo $this->form()->openTag($lopHocForm);
+
+    echo $this->formHidden($lopHocForm->get('MaLop'));
+    ?>
+    <div class="form-group">
+        <?= $this->formLabel($maMon); ?>
+        <?= $this->formElement($maMon); ?>
+        <?= $this->formElementErrors()->render($maMon, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($hocky); ?>
+        <?= $this->formElement($hocky); ?>
+        <?= $this->formElementErrors()->render($hocky, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <div class="form-group">
+        <?= $this->formLabel($nam); ?>
+        <?= $this->formElement($nam); ?>
+        <?= $this->formElementErrors()->render($nam, ['class' => 'help-block']) ?>
+    </div>
+    <br />
+    <?php
+    echo $this->formSubmit($lopHocForm->get('submit'));
+    echo "<a href='javascript:history.go(-1)' class='ms-4 btn btn-outline-secondary'>Quay lại</a>";
+
+    echo $this->form()->closeTag();
+    ?>
+</div>

@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<div class="jumbotron">
+    <h1><span class="zf-green">Học viên</span></h1>
+    <form method="GET" action="/hocvien">
+        <div class="input-group mb-3">
+            <input type="text" name="keyword" class="form-control" placeholder="Nhập tên học viên hoặc mssv để tìm kiếm"
+                value="<?= preg_replace('/\s+/', '', $keyword); ?>">
+            <div class="input-group-append">
+                <input type="submit" name="submit" class="btn btn-primary" value="Tìm">
+            </div>
+        </div>
+    </form>
+
+    <a href="<?= $this->url('hocVien', ['action' => 'add']) ?>">Thêm</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MSSV</th>
+                <th scope="col">Tên SV</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Điểm TB</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php foreach ($hocVienRows as $hocvien): ?>
+                <tr>
+                    <th scope="row">
+                        <?= $this->escapeHtml($hocvien->MSSV) ?>
+                    </th>
+                    <td>
+                        <?= $this->escapeHtml($hocvien->TenSV) ?>
+                    </td>
+                    <td>
+                        <?= $this->escapeHtml($hocvien->GioiTinh) ?>
+                    </td>
+                    <td>
+                        <?= $this->escapeHtml($hocvien->Nsinh) ?>
+                    </td>
+                    <td>
+                        <?= $this->escapeHtml($hocvien->DTB) ?>
+                    </td>
+                    <td>
+                        <a href="<?= $this->url('hocVien', ['action' => 'edit', 'id' => $hocvien->MSSV]) ?>">Edit</a> |
+                        <a href="<?= $this->url('hocVien', ['action' => 'delete', 'id' => $hocvien->MSSV]) ?>">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
