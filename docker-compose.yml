@@ -1,6 +1,7 @@
 services:
   laminas:
     build: .
+    container_name: laminas_mvc_w2_oss_02
     ports:
      - "8080:80"
     volumes:
