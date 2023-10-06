@@ -19,9 +19,9 @@ RewriteRule ^(.*)$ %{ENV:BASE}/index.php [L]
 
 <VirtualHost *:80>
     ServerName ltweb2-w2-0ss-02.onrender.com
-    DocumentRoot ./public
+    DocumentRoot /var/www/public
     SetEnv APPLICATION_ENV "development"
-    <Directory ./public>
+    <Directory /var/www/public>
         DirectoryIndex index.php
         AllowOverride All
         Require all granted
