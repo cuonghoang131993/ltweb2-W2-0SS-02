@@ -19,7 +19,7 @@ class AbstractTable
     {
     }
     
-    protected function fetchAll($select)
+    protected function fetchAll()
     {
         return $this->tableGateway->select();
     }
@@ -39,7 +39,7 @@ class AbstractTable
             $this->tableGateway->insert($data);
             return $this->tableGateway->getLastInsertValue();
         }
-        
+ 
         $this->tableGateway->update($data, [$fieldId => $id]);
         return $id;
     }

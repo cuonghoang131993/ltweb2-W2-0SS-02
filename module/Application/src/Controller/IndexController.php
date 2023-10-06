@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Application\Model;
 use Application\Form;
 
-class IndexController extends AbstractActionController
+class IndexController extends AbstractController
 {
     private $lopTable;
     private $monHocTable;

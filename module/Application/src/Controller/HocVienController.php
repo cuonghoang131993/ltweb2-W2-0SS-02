@@ -2,14 +2,12 @@
 
 namespace Application\Controller;
 
-use Laminas\Mvc\Controller\AbstractActionController;
 use Application\Model;
 use Application\Form;
 
-class HocVienController extends AbstractActionController
+class HocVienController extends AbstractController
 {
     protected $hocVienTable;
-    private $currentRoute;
 
     public function __construct(Model\HocVienTable $_hocVienTable)
     {

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
-use Laminas\Mvc\Controller\AbstractActionController;
 use Application\Model;
 use Application\Form;
 
-class MonHocController extends AbstractActionController
+class MonHocController extends AbstractController
 {
     private $monHocTable;
 

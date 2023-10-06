@@ -14,11 +14,35 @@
 
 return [
     // ...
-    'db' => [
-        'driver'   => 'Pdo_Mysql',
-        'database' => 'qldangky_21880015',
-        'username' => 'root',
-        'password' => '',
-        'hostname' => '127.0.0.1'
-    ]
+    'session' => [
+        'config' => [
+            'class' => \Laminas\Session\Config\SessionConfig::class,
+            'options' => [
+                'name' => 'session_name',
+            ],
+        ],
+        'storage' => \Laminas\Session\Storage\SessionArrayStorage::class,
+        'validators' => [
+            \Laminas\Session\Validator\RemoteAddr::class,
+            \Laminas\Session\Validator\HttpUserAgent::class,
+        ]
+    ],
+    /**
+     * Database Adapter(s)
+     */
+    'service_manager' => [
+        'factories' => [
+            /**
+             * Adapter One - this factory will use the default 'db' connection
+             */
+            'Laminas\Db\Adapter\Adapter' => 'Laminas\Db\Adapter\AdapterServiceFactory',
+            /**
+             * Adapter Two - use the second connection
+             */
+            'Application\Db\AdapterTwo' => function ($sm) {
+                $config = $sm->get('Config');
+                return new \Laminas\Db\Adapter\Adapter($config['db_two']);
+            },
+        ],
+    ],
 ];

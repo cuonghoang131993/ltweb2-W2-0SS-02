@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
-use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Application\Model;
 use Application\Form;
 
-class DangKyController extends AbstractActionController
+class DangKyController extends AbstractController
 {
     private $dangKyTable;
 

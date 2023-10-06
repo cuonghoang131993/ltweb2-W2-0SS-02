@@ -31,7 +31,7 @@ class HocVienTable extends AbstractTable
 
         $result = (isset($params['limit']) && $params['limit'] == 1)
             ? $this->fetchRow($select)
-            : $this->fetchAll($select);
+            : $this->fetchAll();
 
         return $result;
     }
