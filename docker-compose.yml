@@ -1,7 +1,12 @@
 services:
-  laminas:
-    build: .
-    ports:
-     - "8080:80"
+  laminas-app:
+    image: shinsenter/laminas:latest
     volumes:
-     - .:/var/www
+      - .:/var/www/html
+      - ./ssl-certs:/etc/ssl/web
+    environment:
+      TZ: UTC
+      PUID: ${UID:-9999}
+      PGID: ${GID:-9999}
+    ports:
+      - "8081:8081"
