@@ -157,7 +157,7 @@ To setup apache, setup a virtual host to point to the public/ directory of the
 project and you should be ready to go! It should look something like below:
 
 ```apache
-<VirtualHost *:8080>
+<VirtualHost *:80>
     ServerName laminasapp.localhost
     DocumentRoot /path/to/laminasapp/public
     <Directory /path/to/laminasapp/public>
