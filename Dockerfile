@@ -11,8 +11,8 @@ RUN apt-get update
 
 ## Configure Apache
 RUN a2enmod rewrite \
-    && sed -i 's!/var/www/html!/var/www/public!g' /etc/apache2/sites-available/000-default.conf \
-    && mv /var/www/html /var/www/public
+    && sed -i 's!/opt/render/project/src/html!/opt/render/project/src/public!g' /etc/apache2/sites-available/000-default.conf \
+    && mv /opt/render/project/src/html /opt/render/project/src/public
 
 ## Install Composer
 RUN curl -sS https://getcomposer.org/installer \
@@ -75,4 +75,4 @@ RUN apt-get install --yes libicu-dev \
 #     && docker-php-ext-enable redis
 
 
-WORKDIR /var/www
+WORKDIR /opt/render/project/src
