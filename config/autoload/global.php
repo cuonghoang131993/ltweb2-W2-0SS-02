@@ -27,22 +27,15 @@ return [
             \Laminas\Session\Validator\HttpUserAgent::class,
         ]
     ],
-    /**
-     * Database Adapter(s)
-     */
-    'service_manager' => [
-        'factories' => [
-            /**
-             * Adapter One - this factory will use the default 'db' connection
-             */
-            'Laminas\Db\Adapter\Adapter' => 'Laminas\Db\Adapter\AdapterServiceFactory',
-            /**
-             * Adapter Two - use the second connection
-             */
-            'Application\Db\AdapterTwo' => function ($sm) {
-                $config = $sm->get('Config');
-                return new \Laminas\Db\Adapter\Adapter($config['db_two']);
-            },
+    'db' => [
+        'driver' => 'Pdo',
+        'adapters' => [
+            mysqlAdapter::class => [
+                'driver' => 'Pdo',
+                'dsn' => 'mysql:dbname=qldangky_w2_oss_02;host=localhost;charset=utf8',
+                'username' => 'root',
+                'password' => 'root'
+            ],
         ],
     ],
 ];

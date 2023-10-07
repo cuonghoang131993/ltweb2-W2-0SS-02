@@ -3,7 +3,7 @@
 namespace Application\Model;
 
 use Laminas\Db\TableGateway\TableGatewayInterface;
-use Application\Model\AbstractModel;
+use \Application\Model\AbstractModel;
 use RuntimeException;
 
 class AbstractTable

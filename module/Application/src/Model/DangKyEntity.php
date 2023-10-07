@@ -13,7 +13,7 @@ use Laminas\Validator\StringLength;
 use Laminas\InputFilter\InputFilter;
 use Laminas\InputFilter\InputFilterAwareInterface;
 use Laminas\InputFilter\InputFilterInterface;
-use Application\Helper;
+use \Application\Helper;
 
 class DangKyEntity extends AbstractModel implements InputFilterAwareInterface
 {

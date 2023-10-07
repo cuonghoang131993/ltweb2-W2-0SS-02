@@ -2,9 +2,9 @@
 
 namespace Application\Controller;
 
-use Application\Form;
-use Application\Model;
-use Application\Hydrator;
+use \Application\Form;
+use \Application\Model;
+use \Application\Hydrator;
 use Laminas\Session;
 
 class RegisterController extends AbstractController {

@@ -1,7 +1,28 @@
 services:
   laminas:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-     - "8080:80"
+    - 8080:80
     volumes:
-     - .:/var/www
+    - .:/var/www
+    links:
+    - mysql:mysql
+  mysql:
+    image: mysql
+    ports:
+    - 3306:3306
+    command:
+      --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+    - ./mysql:/var/lib/mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+    - 8081:80
+    environment:
+    - PMA_HOST=${PMA_HOST}

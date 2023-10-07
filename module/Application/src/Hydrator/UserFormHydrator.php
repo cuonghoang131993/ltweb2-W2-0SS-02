@@ -2,7 +2,7 @@
 
 namespace Application\Hydrator;
 
-use Application\Form;
+use \Application\Form;
 
 class UserFormHydrator implements \Laminas\Hydrator\Strategy\StrategyInterface
 {

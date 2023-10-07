@@ -4,7 +4,7 @@ namespace Application\Util;
 
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
-use Application\Helper;
+use \Application\Helper;
 
 class Authentication extends AuthenticationService {
     

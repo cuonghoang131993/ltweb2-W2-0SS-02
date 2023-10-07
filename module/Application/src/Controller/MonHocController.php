@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
-use Application\Model;
-use Application\Form;
+use \Application\Model;
+use \Application\Form;
 
 class MonHocController extends AbstractController
 {

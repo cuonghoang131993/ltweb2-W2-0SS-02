@@ -18,8 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `if0_34646631_qldangky_w2_oss_02`
+-- Database: `qldangky_w2_oss_02`
 --
+
+CREATE DATABASE qldangky_w2_oss_02;
+
+USE qldangky_w2_oss_02;
 
 -- --------------------------------------------------------
 

@@ -12,9 +12,9 @@ use Laminas\Db\TableGateway\TableGateway;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Session;
-use Application\Model;
-use Application\Controller;
-use Application\Util;
+use \Application\Model;
+use \Application\Controller;
+use \Application\Util;
 
 class Module implements ConfigProviderInterface
 {

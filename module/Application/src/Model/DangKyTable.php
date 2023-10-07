@@ -2,7 +2,7 @@
 
 namespace Application\Model;
 
-use Application\Helper;
+use \Application\Helper;
 
 class DangKyTable extends AbstractTable
 {
