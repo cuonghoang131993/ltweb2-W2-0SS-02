@@ -12,11 +12,14 @@ class LogoutController extends AbstractController
 
     public function indexAction()
     {
-        $session = new Session\Container('user');
-        $session->getManager()->destroy();
-        // $session->getManager()->getStorage()->clear('user');
-        // unset($_SESSION['user']); 
-        // $this->sessionUser = null;
+        try {
+            //code...
+            $session = new Session\Container('user');
+            $session->getManager()->destroy();    
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
         $this->redirect()->toRoute('login');
     }
 }

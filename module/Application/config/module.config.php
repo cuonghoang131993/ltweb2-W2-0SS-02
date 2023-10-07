@@ -6,6 +6,14 @@ namespace Application;
 
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use Laminas\Db\Adapter;
+use Laminas\Db\Adapter\AdapterInterface;
+use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\TableGateway\TableGateway;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\Session;
+use Application\Util;
+use Application\Helper;
 
 return [
     'router' => [
@@ -103,42 +111,145 @@ return [
             ],
         ],
     ],
+    'service_manager' => [
+        'factories' => [
+            Model\LopTable::class => function ($container) {
+                $tableGateway = $container->get(LopTableGateway::class);
+                return new Model\LopTable($tableGateway);
+            },
+            LopTableGateway::class => function ($container) {
+                $dbAdapter = $container->get(AdapterInterface::class);
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Model\LopEntity());
+                return new TableGateway('lophoc', $dbAdapter, null, $resultSetPrototype);
+            },
+            MonHocTableGateway::class => function ($container) {
+                $dbAdapter = $container->get(AdapterInterface::class);
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Model\MonHocEntity());
+                return new TableGateway('monhoc', $dbAdapter, null, $resultSetPrototype);
+            },
+            Model\MonHocTable::class => function ($sm) {
+                $tableGateway = $sm->get(MonHocTableGateway::class);
+                return new Model\MonHocTable($tableGateway);
+            },
+            HocVienTableGateway::class => function ($container) {
+                $dbAdapter = $container->get(AdapterInterface::class);
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Model\HocVienEntity());
+                return new TableGateway('sinhvien', $dbAdapter, null, $resultSetPrototype);
+            },
+            Model\HocVienTable::class => function ($container) {
+                $tableGateway = $container->get(HocVienTableGateway::class);
+                return new Model\HocVienTable($tableGateway);
+            },
+            DangKyTableGateway::class => function ($container) {
+                $dbAdapter = $container->get(AdapterInterface::class);
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Model\DangKyEntity());
+                return new TableGateway('dkhoc', $dbAdapter, null, $resultSetPrototype);
+            },
+            Model\DangKyTable::class => function ($container) {
+                $tableGateway = $container->get(DangKyTableGateway::class);
+                return new Model\DangKyTable($tableGateway);
+            },
+
+            // Authentication
+            UserTableGateway::class => function ($container) {
+                $dbAdapter = $container->get(AdapterInterface::class);
+                $resultSetPrototype = new ResultSet();
+
+                //pass base url via cnstructor to the User class
+                $resultSetPrototype->setArrayObjectPrototype(new Model\UserEntity());
+                return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
+            },
+            Model\UserTable::class => function ($container) {
+                $tableGateway = $container->get(UserTableGateway::class);
+                $table = new Model\UserTable($tableGateway);
+
+                return $table;
+            },
+            Util\Authentication::class => function ($container) {
+                $auth = new Util\Authentication(
+                    $container->get(Adapter\Adapter::class)
+                );
+                return $auth;
+            },
+            Helper\Password::class => InvokableFactory::class,
+
+            SessionManager::class => function ($container) {
+                $config = $container->get('config');
+                $session = $config['session'];
+                $sessionConfig = new $session['config']['class']();
+                $sessionConfig->setOptions($session['config']['options']);
+                $sessionManager = new Session\SessionManager(
+                    $sessionConfig,
+                    new $session['storage'](),
+                    null
+                );
+                Session\Container::setDefaultManager($sessionManager);
+
+                return $sessionManager;
+            },
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            Controller\IndexController::class => function ($container) {
+                return new Controller\IndexController(
+                    $container->get(Model\LopTable::class),
+                    $container->get(Model\MonHocTable::class)
+                );
+            },
+            Controller\MonHocController::class => function ($container) {
+                return new Controller\MonHocController(
+                    $container->get(Model\MonHocTable::class)
+                );
+            },
+            Controller\HocVienController::class => function ($container) {
+                return new Controller\HocVienController(
+                    $container->get(Model\HocVienTable::class)
+                );
+            },
+            Controller\DangKyController::class => function ($container) {
+                return new Controller\DangKyController(
+                    $container->get(Model\DangKyTable::class)
+                );
+            },
+            Controller\LoginController::class => function ($sm) {
+                return new Controller\LoginController(
+                    $sm->get(Util\Authentication::class)
+                );
+            },
+            Controller\RegisterController::class => function ($container) {
+                return new Controller\RegisterController(
+                    $container->get(Model\UserTable::class),
+                    $container->get(Util\Authentication::class),
+                    $container->get(Helper\Password::class)
+                );
+            },
+            Controller\LoginController::class => function ($container) {
+                return new Controller\LoginController(
+                    $container->get(Util\Authentication::class)
+                );
+            },
+            Controller\LogoutController::class => InvokableFactory::class,
+        ],
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions' => true,
-        'doctype' => 'HTML5',
-        'not_found_template' => 'error/404',
-        'exception_template' => 'error/index',
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'not_found_template'       => 'error/404',
+        'exception_template'       => 'error/index',
         'template_map' => [
-            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'error/404' => __DIR__ . '/../view/error/404.phtml',
-            'error/index' => __DIR__ . '/../view/error/index.phtml',
-            'application/login/index' => __DIR__ . '/../view/application/login/index.phtml',
-            'application/lophoc/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'application/lophoc/edit' => __DIR__ . '/../view/application/index/edit.phtml',
-            'application/lophoc/add' => __DIR__ . '/../view/application/index/add.phtml',
-            'application/lophoc/delete' => __DIR__ . '/../view/application/index/delete.phtml',
-            'application/hocvien/index' => __DIR__ . '/../view/application/hoc-vien/index.phtml',
-            'application/hocvien/edit' => __DIR__ . '/../view/application/hoc-vien/edit.phtml',
-            'application/hocvien/add' => __DIR__ . '/../view/application/hoc-vien/add.phtml',
-            'application/hocvien/delete' => __DIR__ . '/../view/application/hoc-vien/delete.phtml',
-            'application/dangky/index' => __DIR__ . '/../view/application/dang-ky/index.phtml',
-            'application/dangky/edit' => __DIR__ . '/../view/application/dang-ky/edit.phtml',
-            'application/dangky/add' => __DIR__ . '/../view/application/dang-ky/add.phtml',
-            'application/dangky/delete' => __DIR__ . '/../view/application/dang-ky/delete.phtml',
-            'application/monhoc/index' => __DIR__ . '/../view/application/mon-hoc/index.phtml',
-            'application/monhoc/edit' => __DIR__ . '/../view/application/mon-hoc/edit.phtml',
-            'application/monhoc/add' => __DIR__ . '/../view/application/mon-hoc/add.phtml',
-            'application/monhoc/delete' => __DIR__ . '/../view/application/mon-hoc/delete.phtml'
+            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
-        ],
-    ],
-    'service_manager' => [
-        'factories' => [
-            SessionManager::class
         ],
     ],
 ];

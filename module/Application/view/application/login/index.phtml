@@ -35,7 +35,7 @@
                         <?php
                         echo $this->formRow($form->get('login_fieldset')->get('user_csrf'));
                         echo $this->formSubmit($form->get('submit'));
-                        echo "<a class='ms-4' href='/register'>Hoặc Đăng ký tài khoản</a>";
+                        echo "<a class='ms-4' href='" . $this->url('register') . "'>Hoặc Đăng ký tài khoản</a>";
                         echo $this->form()->closeTag();
                         ?>
                     </div>

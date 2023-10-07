@@ -14,6 +14,22 @@
 
 return [
     // ...
+    // 'db' => [
+    //     'driver'   => 'Pdo_Mysql',
+    //     'database' => 'qldangky_21880015',
+    //     'username' => 'root',
+    //     'password' => '',
+    //     'hostname' => '127.0.0.1'
+
+    // ],
+    'db' => [
+        'driver'   => 'Pdo_Mysql',
+        'database' => 'if0_34646631_qldangky_w2_oss_02',
+        'username' => 'if0_34646631',
+        'password' => 'GuJec0E8rnb',
+        'hostname' => 'sql305.infinityfree.com'
+
+    ],
     'session' => [
         'config' => [
             'class' => \Laminas\Session\Config\SessionConfig::class,
@@ -26,16 +42,5 @@ return [
             \Laminas\Session\Validator\RemoteAddr::class,
             \Laminas\Session\Validator\HttpUserAgent::class,
         ]
-    ],
-    'db' => [
-        'driver' => 'Pdo',
-        'adapters' => [
-            mysqlAdapter::class => [
-                'driver' => 'Pdo',
-                'dsn' => 'mysql:dbname=qldangky_w2_oss_02;host=localhost;charset=utf8',
-                'username' => 'root',
-                'password' => 'root'
-            ],
-        ],
     ],
 ];

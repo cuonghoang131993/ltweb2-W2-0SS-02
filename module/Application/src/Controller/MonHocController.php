@@ -72,7 +72,7 @@ class MonHocController extends AbstractController
         $form->get('submit')->setAttribute('value', 'Sửa');
 
         $request = $this->getRequest();
-        $viewData = ['id' => $id, 'monHocForm' => $form, 'current_route' => $this->currentRoute ];
+        $viewData = ['id' => $id, 'monHocForm' => $form ];
 
         if (!$request->isPost()) {
             return $viewData;

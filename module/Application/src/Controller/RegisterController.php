@@ -7,7 +7,8 @@ use \Application\Model;
 use \Application\Hydrator;
 use Laminas\Session;
 
-class RegisterController extends AbstractController {
+class RegisterController extends AbstractController
+{
     protected $userModel;
     protected $securityAuth;
     protected $securityHelper;
@@ -31,10 +32,10 @@ class RegisterController extends AbstractController {
         $viewParams = [
             'userForm' => $form
         ];
-        
-        if ($this->getRequest()->isPost()) { 
+
+        if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
-            
+
             if ($form->isValid()) {
                 $rowset = new Model\UserEntity();
                 $hydrator = new Hydrator\UserFormHydrator($this->securityHelper);
@@ -51,12 +52,12 @@ class RegisterController extends AbstractController {
                     $formData[Form\UserLoginFieldset::ELEMENT_PASSWORD]
                 );
                 $identity = $this->securityAuth->getIdentityArray();
-                
+
                 if ($identity) {
-                    //session creation
-                    $sessionUser = new Session\Container('user');
-                    $sessionUser->details = $rowset;
-                    
+                        //session creation
+                        $sessionUser = new Session\Container('user');
+                        $sessionUser->details = $rowset;
+
                     return $this->redirect()->toUrl('login');
                 } else {
                     throw new \Exception('Something went wrong.. Check if the user has been added to the database correctly');
@@ -68,4 +69,3 @@ class RegisterController extends AbstractController {
         return $viewParams;
     }
 }
-

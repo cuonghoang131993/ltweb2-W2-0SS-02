@@ -103,6 +103,7 @@ class HocVienController extends AbstractController
             'TenSV' => $hocVienForm->getData()->TenSV,
             'GioiTinh' => $hocVienForm->getData()->GioiTinh,
             'Nsinh' => $hocVienForm->getData()->Nsinh,
+            'DTB' => null
         );
         $this->hocVienTable->patch($hocVienId, $u_hocvien);
 

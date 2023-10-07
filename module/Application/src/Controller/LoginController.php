@@ -36,16 +36,16 @@ class LoginController extends AbstractController
             $form->get($form::FIELDSET_LOGIN)->get('Password')->getValue()
         );
         $identity = $this->securityAuth->getIdentityArray();
-        
+
         if ($identity) {
             $rowset = new Model\UserEntity();
             $rowset->exchangeArray($identity);
             $this->securityAuth->getStorage()->write($rowset);
-            
+
             $sessionUser = new Session\Container('user');
             $sessionUser->details = $rowset;
-  
-            return $this->redirect()->toUrl('/');
+
+            return $this->redirect()->toUrl($this->baseUrl);
         } else {
             $message = '<strong>Error</strong> Given email address or password is incorrect.';
             return [
@@ -54,21 +54,4 @@ class LoginController extends AbstractController
             ];
         }
     }
-
-    // public function progressUserAction()
-    // {
-    //     $sessionUser = new Session\Container('user');
-
-    //     if (!empty($this->params()->fromQuery('redirectTo'))) {
-    //         return $this->redirect()->toUrl($this->params()->fromQuery('redirectTo'), 302);
-    //     }
-
-    //     // if ($sessionUser->details->getRole() === 'admin' || $sessionUser->details->getRole() === 'super_admin') {
-    //     //     $this->redirect()->toRoute('admin', ['controller' => 'IndexController', 'action' => 'index']);
-    //     // } else if($sessionUser->details->getRole() === 'user') {
-    //     //     $this->redirect()->toRoute('user');
-    //     // }
-
-    //     $this->redirect()->toRoute('user');
-    // }
 }

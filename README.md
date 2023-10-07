@@ -76,10 +76,10 @@ or manually make matching updates to the `.dist`-less copies of those files.
 To run the supplied skeleton unit tests, you need to do one of the following:
 
 - During initial project creation, select to install the MVC testing support.
-- After initial project creation, install [laminas-test](https://docs.laminas.dev/laminas-test/):
+- After initial project creation, install [w2_oss_02](https://docs.laminas.dev/w2_oss_02/):
 
   ```bash
-  $ composer require --dev laminas/laminas-test
+  $ composer require --dev laminas/w2_oss_02
   ```
 
 Once testing support is present, you can run the tests using:
@@ -97,11 +97,11 @@ control. (If you want to make the modifications permanent, edit the
 ## Running Psalm Static Analysis
 
 To run the supplied skeleton static analysis, you need to do one of the following:
-It is recommended to install the test components from laminas (laminas/laminas-test), 
+It is recommended to install the test components from laminas (laminas/w2_oss_02), 
 as this is used in the tests supplied.
 
   ```bash
-  $ composer require --dev vimeo/psalm psalm/plugin-phpunit laminas/laminas-test
+  $ composer require --dev vimeo/psalm psalm/plugin-phpunit laminas/w2_oss_02
   ```
 
 Once psalm support is present, you can run the static analysis using:
@@ -217,7 +217,7 @@ The skeleton does not come with any QA tooling by default, but does ship with
 configuration for each of:
 
 - [phpcs](https://github.com/squizlabs/php_codesniffer)
-- [laminas-test](https://docs.laminas.dev/laminas-test/)
+- [w2_oss_02](https://docs.laminas.dev/w2_oss_02/)
 - [phpunit](https://phpunit.de)
 
 Additionally, it comes with some basic tests for the shipped
@@ -226,7 +226,7 @@ Additionally, it comes with some basic tests for the shipped
 If you want to add these QA tools, execute the following:
 
 ```bash
-$ composer require --dev squizlabs/php_codesniffer laminas/laminas-test
+$ composer require --dev squizlabs/php_codesniffer laminas/w2_oss_02
 ```
 
 We provide aliases for each of these tools in the Composer configuration:

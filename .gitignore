@@ -5,6 +5,3 @@ data/cache/*
 !data/cache/.gitkeep
 phpunit.xml
 .phpunit.result.cache
-mysql
-.docker
-.data

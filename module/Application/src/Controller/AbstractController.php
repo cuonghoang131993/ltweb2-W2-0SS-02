@@ -1,4 +1,5 @@
 <?php
+
 namespace Application\Controller;
 
 use Laminas\Mvc\MvcEvent;
@@ -19,28 +20,37 @@ class AbstractController extends \Laminas\Mvc\Controller\AbstractActionControlle
         $this->sessionUser = new Session\Container('user');
         $action = $e->getRouteMatch()->getParam('action', 'index');
         $e->getTarget()->layout()->action = $action;
+        $routeMatch = $e->getRouteMatch();
+        $routeName = $routeMatch->getMatchedRouteName();
+        $ignorePaths = ['login', 'register'];
 
         if ($this->sessionUser->details) {
             //assign logged-in user object into layout if it's admin user
             $e->getViewModel()->setVariable('user', $this->sessionUser->details);
+
+            if (in_array($routeName, $ignorePaths)) {
+                //redirect user unauthorized user to login page
+                $url = $e->getRouter()->assemble(['action' => 'index'], ['name' => 'home']);
+                $response = $e->getResponse();
+                $response->getHeaders()->addHeaderLine('Location', $url);
+                $response->setStatusCode(302);
+                $response->sendHeaders();
+                exit();
+            }
         } else {
-            $routeMatch = $e->getRouteMatch();
-            if ($routeMatch) {
-                $routeName = $routeMatch->getMatchedRouteName();
-                $ignorePaths = ['login', 'register'];
-                if (!in_array($routeName, $ignorePaths)) {
-                    //redirect user unauthorized user to login page
-                    $url = $e->getRouter()->assemble(['action' => 'index'], ['name' => 'login']);
-                    $response = $e->getResponse();
-                    $response->getHeaders()->addHeaderLine('Location', $url);
-                    $response->setStatusCode(302);
-                    $response->sendHeaders();
-                    exit();
-                }
+
+
+            if (!in_array($routeName, $ignorePaths)) {
+                //redirect user unauthorized user to login page
+                $url = $e->getRouter()->assemble(['action' => 'index'], ['name' => 'login']);
+                $response = $e->getResponse();
+                $response->getHeaders()->addHeaderLine('Location', $url);
+                $response->setStatusCode(302);
+                $response->sendHeaders();
+                exit();
             }
         }
 
         return parent::onDispatch($e);
     }
-
 }

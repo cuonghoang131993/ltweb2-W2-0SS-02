@@ -78,7 +78,11 @@ class HocVienTable extends AbstractTable
             $passedData['Nsinh'] = $data['Nsinh'];
         }
 
-        $passedData['DTB'] = $data['DTB'];
+        if (!empty($data['DTB'])) {
+            $passedData['DTB'] = $data['DTB'];
+        } else {
+            $passedData['DTB'] = null;
+        }
 
         $this->tableGateway->update($passedData, ['MSSV' => $id]);
     }
