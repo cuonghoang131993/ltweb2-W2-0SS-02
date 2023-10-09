@@ -22,7 +22,7 @@ class AbstractController extends \Laminas\Mvc\Controller\AbstractActionControlle
         $e->getTarget()->layout()->action = $action;
         $routeMatch = $e->getRouteMatch();
         $routeName = $routeMatch->getMatchedRouteName();
-        $ignorePaths = ['login', 'register'];
+        $ignorePaths = ['login', 'register', 'index.php'];
 
         if ($this->sessionUser->details) {
             //assign logged-in user object into layout if it's admin user
@@ -38,8 +38,6 @@ class AbstractController extends \Laminas\Mvc\Controller\AbstractActionControlle
                 exit();
             }
         } else {
-
-
             if (!in_array($routeName, $ignorePaths)) {
                 //redirect user unauthorized user to login page
                 $url = $e->getRouter()->assemble(['action' => 'index'], ['name' => 'login']);
