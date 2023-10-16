@@ -48,7 +48,7 @@
         "post-update-cmd": "@clear-config-cache",
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "php -S 0.0.0.0:8080 -t public"
+            "php -S 0.0.0.0:8080"
         ],
         "test": "vendor/bin/phpunit",
         "static-analysis": "vendor/bin/psalm --shepherd --stats"
