@@ -1,6 +1,6 @@
 RewriteEngine On
 
-SetEnv "APP_ENV" "development"
+# SetEnv "APP_ENV" "development"
 
 
 # The following rule tells Apache that if the requested filename

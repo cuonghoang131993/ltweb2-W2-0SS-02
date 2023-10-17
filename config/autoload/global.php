@@ -14,22 +14,21 @@
 
 return [
     // ...
-    'db' => [
-        'driver'   => 'Pdo_Mysql',
-        'database' => 'qldangky_w2_oss_02',
-        'username' => 'root',
-        'password' => '',
-        'hostname' => '127.0.0.1'
-
-    ],
     // 'db' => [
     //     'driver'   => 'Pdo_Mysql',
-    //     'database' => 'if0_34646631_qldangky_w2_oss_02',
-    //     'username' => 'if0_34646631',
-    //     'password' => 'GuJec0E8rnb',
-    //     'hostname' => 'sql305.infinityfree.com'
+    //     'database' => 'qldangky_w2_oss_02',
+    //     'username' => 'root',
+    //     'password' => '',
+    //     'hostname' => '127.0.0.1'
 
     // ],
+    'db' => [
+        'driver'   => 'Pdo_Mysql',
+        'database' => 'if0_35246369_qldangky_w2_oss_02',
+        'username' => 'if0_35246369',
+        'password' => 'xr2vIxVOWpz',
+        'hostname' => 'sql213.infinityfree.com'
+    ],
     'session' => [
         'config' => [
             'class' => \Laminas\Session\Config\SessionConfig::class,
