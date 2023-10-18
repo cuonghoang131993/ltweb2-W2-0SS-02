@@ -58,8 +58,8 @@ class RegisterController extends AbstractController
 
                 if ($identity) {
                         //session creation
-                        $sessionUser = new Session\Container('user');
-                        $sessionUser->details = $rowset;
+                        // $sessionUser = new Session\Container('user');
+                        // $sessionUser->details = $rowset;
 
                     return $this->redirect()->toUrl('login');
                 } else {
