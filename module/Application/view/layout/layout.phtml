@@ -2,16 +2,16 @@
 /**
  * @var Laminas\View\Renderer\PhpRenderer $this
  */
-// session_start();
-// #du kien luu trong session cac bien sau: KQLogin, TenDN
-// if (isset($_SESSION['KQLogin']) == false || $_SESSION['KQLogin'] == false) {
-//     #khoi tao gia tri mac dinh cho session
-//     $_SESSION['KQLogin'] = false;
-//     $_SESSION['TenDN'] = '';
-//     header("location:login.php");
-//     die;
-// }
-
+$current_url = $_SERVER['REQUEST_URI'];
+if (
+    $current_url != '/login' &&
+    $current_url != '/register' &&
+    !isset($user) &&
+    $_SERVER["REQUEST_METHOD"] != "POST"
+) {
+    header('Location:/login');
+    exit;
+}
 ?>
 <?= $this->doctype() ?>
 <html lang="en">
@@ -55,38 +55,38 @@
             </div>
 
             <?php if (isset($user)) { ?>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link <?= (str_contains($this->url(), 'lophoc')) ? 'active' : '' ?>"
-                            aria-current="page" href="<?= $this->url('lopHoc') ?>">Lớp học
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= (str_contains($this->url(), 'monhoc')) ? 'active' : '' ?>"
-                            aria-current="page" href="<?= $this->url('monHoc') ?>">Môn học
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= (str_contains($this->url(), 'hocvien')) ? 'active' : '' ?>"
-                            aria-current="page" href="<?= $this->url('hocVien') ?>">Học viên
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= (str_contains($this->url(), 'dangky')) ? 'active' : '' ?>"
-                            aria-current="page" href="<?= $this->url('dangKy') ?>">Đăng ký môn
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link <?= (str_contains($this->url(), 'lophoc')) ? 'active' : '' ?>"
+                                aria-current="page" href="<?= $this->url('lopHoc') ?>">Lớp học
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= (str_contains($this->url(), 'monhoc')) ? 'active' : '' ?>"
+                                aria-current="page" href="<?= $this->url('monHoc') ?>">Môn học
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= (str_contains($this->url(), 'hocvien')) ? 'active' : '' ?>"
+                                aria-current="page" href="<?= $this->url('hocVien') ?>">Học viên
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= (str_contains($this->url(), 'dangky')) ? 'active' : '' ?>"
+                                aria-current="page" href="<?= $this->url('dangKy') ?>">Đăng ký môn
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-            <span class="navbar-text">
-                Xin chào,
-                <?= $user->Username ?>
-                | <a href="<?= $this->url('logout') ?>">
-                    Đăng xuất
-                </a>
-            </span>
+                <span class="navbar-text">
+                    Xin chào,
+                    <?= $user->Username ?>
+                    | <a href="<?= $this->url('logout') ?>">
+                        Đăng xuất
+                    </a>
+                </span>
             <?php } ?>
         </div>
     </nav>

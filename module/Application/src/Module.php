@@ -22,9 +22,9 @@ class Module
 
     public function bootstrapSession($e)
     {
-        $serviceManager = $e->getApplication()->getServiceManager();
-        $session = $serviceManager->get(SessionManager::class);
-        $session->start();
+        // $serviceManager = $e->getApplication()->getServiceManager();
+        // $session = $serviceManager->get(SessionManager::class);
+        // $session->start();
         // $container = new Session\Container('initialized');
 
         // //let’s check if our session is not already created (for the guest or user)

@@ -16,6 +16,9 @@ class LoginController extends AbstractController
     }
     public function indexAction()
     {
+        if ($this->sessionUser->details)
+            return $this->redirect()->toRoute('home', ['action' => 'index']);
+
         $form = new Form\UserLoginForm();
         //print_r($this);
         if (!$this->getRequest()->isPost()) {
@@ -45,7 +48,7 @@ class LoginController extends AbstractController
             $sessionUser = new Session\Container('user');
             $sessionUser->details = $rowset;
 
-            return $this->redirect()->toUrl($this->baseUrl);
+            return $this->redirect()->toRoute('home', ['action' => 'index']);
         } else {
             $message = '<strong>Error</strong> Given email address or password is incorrect.';
             return [

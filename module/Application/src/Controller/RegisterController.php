@@ -22,6 +22,9 @@ class RegisterController extends AbstractController
 
     public function indexAction()
     {
+        if ($this->sessionUser->details)
+            return $this->redirect()->toRoute('home', ['action' => 'index']);
+
         $form = new Form\UserRegisterForm(
             'user_register',
             [

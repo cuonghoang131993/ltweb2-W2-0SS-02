@@ -23,16 +23,18 @@ return [
     ],
     // 'db' => [
     //     'driver'   => 'Pdo_Mysql',
-    //     'database' => 'if0_35248443_qldangky_w2_oss_02',
-    //     'username' => 'if0_34646631',
-    //     'password' => 'GuJec0E8rnb',
-    //     'hostname' => 'sql305.infinityfree.com'
+    //     'database' => 'if0_35251498_qldangky_w2_oss_02',
+    //     'username' => 'if0_35251498',
+    //     'password' => 'atRC24bDdRA7hjR',
+    //     'hostname' => 'sql208.infinityfree.com'
     // ],
     'session' => [
         'config' => [
             'class' => \Laminas\Session\Config\SessionConfig::class,
             'options' => [
-                'name' => 'session_name',
+                'name' => 'session_w2_oss_02',
+                'cookie_httponly'=> true,
+                'cookie_lifetime' => 300
             ],
         ],
         'storage' => \Laminas\Session\Storage\SessionArrayStorage::class,
